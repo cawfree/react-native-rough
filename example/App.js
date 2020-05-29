@@ -1,106 +1,305 @@
 import React, {useEffect, useState, useRef} from 'react';
+import {TouchableOpacity, View, StyleSheet, Animated, Dimensions, SafeAreaView, ScrollView, Text} from 'react-native';
 import Svg from 'react-native-svg';
-import {Animated} from 'react-native';
 import Rough from 'react-native-rough';
 
-export default () => {
-  const {current: x} = useRef(new Animated.Value(10));
-  const {current: y} = useRef(new Animated.Value(100));
-  const {current: width} = useRef(new Animated.Value(1));
-  const {current: height} = useRef(new Animated.Value(200));
+const {width, height} = Dimensions.get("window");
 
-  const [points] = useState(
-    [
-      [100, 200],
-      [300, 300],
-      [0, 700],
-    ].map(([x, y]) => new Animated.ValueXY({x, y})),
-  );
+const styles = StyleSheet.create({
+  flex: {
+    flex: 1,
+  },
+  preview: {
+    width,
+    height: width,
+  },
+  activeRow: {
+    padding: 10,
+    backgroundColor: "#F5F7FF",
+  },
+  row: {
+    padding: 10,
+  },
+  rowTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#606C71",
+  },
+  divider: {
+    marginLeft: width * 0.05,
+    width: width * 0.9,
+    backgroundColor: "#2222220F",
+    height: 1,
+  },
+  centerAlign: {
+    textAlign: "center",
+  },
+  title: {
+    fontSize: 40,
+    color: "#169958",
+  },
+  subtitle: {
+    fontSize: 20,
+    marginVertical: 5,
+    color: "#606C71",
+  },
+});
 
-  useEffect(() => {
-    Animated.timing(width, {
-      toValue: 300,
-      duration: 1000,
+const RectangleExample = () => {
+
+  const padding = 50;
+
+  const {current: x} = useRef(new Animated.Value(padding));
+  const {current: y} = useRef(new Animated.Value(padding));
+  const {current: size} = useRef(new Animated.Value(0));
+
+  useEffect(() => Animated.timing(size, {
+      toValue: width - 2 * padding,
+      duration: 500,
       useNativeDriver: true,
-    }).start();
-
-    Animated.timing(points[0], {
-      toValue: {x: 105, y: 205},
-      duration: 1000,
-      useNativeDriver: true,
-    }).start();
-  }, []);
+    }).start() && undefined, []);
 
   return (
-    <Svg width="100%" height="100%">
-      <Rough.Rectangle
+    <Rough.Rectangle
         x={x}
-        hachureAngle={60}
-        hachureGap={30}
-        fillWeight={3}
         y={y}
-        width={width}
-        height={height}
+        width={size}
+        height={size}
+        hachureAngle={60}
+        hachureGap={15}
+        fillWeight={3}
         stroke="red"
         strokeWidth={5}
         fill="blue"
       />
-      <Rough.Ellipse
-        bowing={2}
-        roughness={2.8}
-        x={x}
-        y={Animated.add(y, 300)}
-        width={width}
-        height={height}
-        stroke="green"
-        strokeWidth={5}
-        fillStyle="zigzag"
-        fill="blue"
-      />
-      <Rough.Line
-        x1={y}
-        y1={y}
-        x2={width}
-        y2={width}
-        stroke="red"
-        strokeWidth={5}
-        fill="blue"
-      />
-      <Rough.Circle
-        x={x}
-        y={x}
-        diameter={width}
-        stroke="red"
-        strokeWidth={5}
-        fill="blue"
-      />
-      <Rough.Arc
-        x={width}
-        y={Animated.add(400, 0)}
-        closed
-        roughClosure
-        width={Animated.add(200, 0)}
-        height={Animated.add(180, 0)}
-        start={Animated.add(Math.PI / 2, 0)}
-        stop={Animated.add(Math.PI, 0)}
-        fillStyle="zigzag"
-        strokeWidth={2}
-        stroke="blue"
-        fill="rgba(255,0,255,0.4)"
-      />
-      <Rough.LinearPath points={points} strokeWidth={100} stroke="green" />
-      <Rough.Polygon
-        points={points}
-        strokeWidth={5}
-        fill="red"
-        stroke="yellow"
-      />
-      <Rough.Curve
-        points={points}
-        strokeWidth={5}
-        fill="purple"
-        stroke="yellow"
-      />
-    </Svg>
+  );
+};
+
+const ArcExample = () => {
+  const padding = 50;
+
+  const {current: x} = useRef(new Animated.Value(width * 0.5));
+  const {current: y} = useRef(new Animated.Value(width * 0.5));
+
+  const {current: size} = useRef(new Animated.Value(width - (2 * padding)));
+  
+  const {current: start} = useRef(new Animated.Value(0));
+  const {current: stop} = useRef(new Animated.Value(0.01));
+
+  useEffect(() => Animated.timing(stop, {
+    toValue: Math.PI * 2,
+    duration: 500,
+    useNativeDriver: true,
+  }).start() && undefined, []);
+
+  return (
+   <Rough.Arc
+     seed={10}
+     x={x}
+     y={y}
+     closed
+     width={size}
+     height={size}
+     start={start}
+     stop={stop}
+     fillStyle="zigzag"
+     strokeWidth={4}
+     stroke="orange"
+     fill="rgba(255,0,255,0.4)"
+   />
+  );
+};
+
+const LinearPathExample = () => {
+  const [points] = useState(
+    [...Array(10)]
+      .map(
+        (_, i, orig) => new Animated.ValueXY({x: (i == 0) ? 0 : (i + 1) * (width / orig.length), y: width * 0.5}),
+      ),
+  );
+
+  useEffect(
+    () => {
+      Animated.parallel(
+        points
+          .map(
+            point => Animated
+              .spring(
+                point,
+                {
+                  toValue: {
+                    x: point.x.__getValue(),
+                    y: width * Math.random(),
+                  },
+                  useNativeDriver: true,
+                },
+              ),
+          ),
+      ).start();
+    },
+    [],
+  );
+
+  return (
+    <Rough.LinearPath
+      points={points}
+      strokeWidth={5}
+      stroke="pink"
+    />
+  );
+};
+
+const LineExample = () => {
+
+  const padding = 50;
+
+  const {current: x} = useRef(new Animated.Value(padding));
+  const {current: y} = useRef(new Animated.Value(padding));
+  const {current: size} = useRef(new Animated.Value(30));
+
+  useEffect(() => Animated.timing(size, {
+      toValue: width - padding,
+      duration: 400,
+      useNativeDriver: true,
+    }).start() && undefined, []);
+
+  return (
+    <Rough.Line
+      x1={x}
+      y1={y}
+      x2={size}
+      y2={size}
+      stroke="purple"
+      strokeWidth={30}
+    />
+  );
+};
+
+const CurveExample = () => {
+  // draw sine curve
+  let points = [];
+  for (let i = 0; i < 20; i++) {
+    // 4pi - 400px
+    let x = (width / 20) * i + 10;
+    let xdeg = (Math.PI / 100) * x;
+    let y = Math.round(Math.sin(xdeg) * width * 0.4);// + width * 0.5;
+    points.push(
+      new Animated.ValueXY({x, y}),
+    );
+  }
+
+  useEffect(
+    () => {
+      Animated.parallel(
+        points
+          .map(
+            point => Animated
+              .spring(
+                point,
+                {
+                  toValue: {
+                    x: point.x.__getValue(),
+                    y: point.y.__getValue() + (width * 0.5),
+                  },
+                  useNativeDriver: true,
+                },
+              ),
+          ),
+      ).start();
+    },
+    [],
+  );
+
+  return (
+    <Rough.Curve
+      points={points}
+      strokeWidth={5}
+      stroke="navy"
+    />
+  );
+};
+
+export default () => {
+  const [index, setIndex] = useState(0);
+  const [rows] = useState([
+    ["Rectangle", "Sketches a rough rectangle.", RectangleExample],
+    ["Line", "Draws a cool, hand-drawn looking line between two points.", LineExample],
+    ["Arc", "Renders an arc. You know, like a pie chart?", ArcExample],
+    ["LinearPath", "Draw a line between array of points.", LinearPathExample],
+    ["Curve", "Like a LinearPath, but the points are smoothly interpolated between.", CurveExample],
+  ]);
+  const Example = rows[index][2];
+  return (
+    <View
+      style={StyleSheet.absoluteFill}
+    >
+      <SafeAreaView />
+      <View
+        style={styles.flex}
+      >
+        <View
+          style={styles.preview}
+        >
+          <Svg
+            pointerEvents="none"
+            width={width}
+            height={width}
+          >
+            <Example />
+          </Svg>
+        </View>
+        <ScrollView
+          style={styles.flex}
+        >
+          <View
+          >
+            <Text
+              style={[styles.title, styles.centerAlign]}
+              children="Rough.js"
+            />
+            <Text
+              style={[styles.subtitle, styles.centerAlign]}
+              children="Create graphics with a hand-drawn, sketchy, appearance."
+            />
+          </View>
+          <Text
+            style={[styles.title, {padding: 10}]}
+            children="Api"
+          />
+          {rows.map(
+            ([rowTitle, rowDescription], i, orig) => (
+              <TouchableOpacity
+                key={i}
+                onPress={() => setIndex(i)}
+              >
+                <View
+                  style={(i === index) ? styles.activeRow : styles.row}
+                >
+                  <Text
+                    style={styles.rowTitle}
+                    children={`<Rough.${rowTitle} />`}
+                  />
+                  {(i === index) && (
+
+                    <View
+                      style={{
+                        paddingHorizontal: 10,
+                        paddingTop: 5,
+                      }}
+                    >
+                      <Text
+                        children={rowDescription}
+                      />
+                    </View>
+                  )}
+                </View>
+                <View style={styles.divider} />
+              </TouchableOpacity>
+            ),
+          )}
+          <SafeAreaView />
+        </ScrollView>
+      </View>
+    </View>
   );
 };

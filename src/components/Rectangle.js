@@ -21,6 +21,7 @@ const Rectangle = ({ x, y, width, height, throttle: ms, ...o }) => {
           o
         )
       );
+
       updateA(a);
       updateB(b);
     }, ms),
