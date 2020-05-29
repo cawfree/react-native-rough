@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from "react";
+import React, {useEffect, useState, useRef} from "react";
 import Svg from "react-native-svg";
 import {Animated} from "react-native";
 import Rough from "./rough";
@@ -8,6 +8,11 @@ export default () => {
   const {current:y} = useRef(new Animated.Value(100));
   const {current:width} = useRef(new Animated.Value(1));
   const {current:height} = useRef(new Animated.Value(200));
+
+  const [points] = useState(
+    [[100, 200], [300, 300], [0, 700]]
+      .map(([x, y]) => new Animated.ValueXY({x, y})),
+  );
 
   useEffect(
     () => {
@@ -20,10 +25,20 @@ export default () => {
         },
       )
         .start();
+
+      Animated.timing(
+        points[0],
+        {
+          toValue: {x: 105, y: 205},
+          duration: 1000,
+          useNativeDriver: true,
+        },
+      )
+        .start();
     },
     [],
-  );
-  
+  ); 
+
   return (
     <Svg
       width="100%"
@@ -83,6 +98,17 @@ export default () => {
         strokeWidth={2}
         stroke="blue"
         fill="rgba(255,0,255,0.4)"
+      />
+      <Rough.LinearPath
+        points={points}
+        strokeWidth={100}
+        stroke="green"
+      />
+      <Rough.Polygon
+        points={points}
+        strokeWidth={5}
+        fill="red"
+        stroke="yellow"
       />
     </Svg>
   );

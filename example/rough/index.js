@@ -1,4 +1,4 @@
-import {Rectangle, Ellipse, Line, Circle, Arc} from "./components";
+import {Rectangle, Ellipse, Line, Circle, Arc, LinearPath, Polygon} from "./components";
 
 export default Object.freeze({
   Rectangle,
@@ -6,4 +6,6 @@ export default Object.freeze({
   Line,
   Circle,
   Arc,
+  LinearPath,
+  Polygon,
 });

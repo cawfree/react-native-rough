@@ -1,7 +1,6 @@
 import React, {useCallback} from "react";
 import PropTypes from "prop-types";
 import {throttle} from "lodash";
-import {rectangle} from "roughjs/bin/renderer.js";
 
 import {useAnimatedPath, useRough, useAnimatedCallback} from "../hooks";
 
