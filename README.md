@@ -20,4 +20,4 @@ The component property spec fully conforms to the [**Rough.js API Specification*
 You can see this library in action in the [**Example App**](./example/App.js). 
 
 ## license
-[MIT](./LICENSE.md)
+[**MIT**](./LICENSE.md)
