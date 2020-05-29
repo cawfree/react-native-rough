@@ -3,9 +3,10 @@
 </p>
 
 # react-native-rough
-Animated [**Rough.js**](https://roughjs.com/) bindings for that hand-drawn feel.
 
 <img alt="code style: prettier" src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square">
+
+Animated [**Rough.js**](https://roughjs.com/) bindings for that hand-drawn feel.
 
 ## 🚀 getting started
 
