@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./public/logo.png" alt="react-native-roughjs" width="256" height="256" />
+  <img src="./public/logo.png" alt="react-native-roughjs" width="256" height="240" />
 </p>
 
 # react-native-rough
