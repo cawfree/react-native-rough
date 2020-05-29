@@ -70,6 +70,20 @@ export default () => {
         strokeWidth={5}
         fill="blue"
       />
+      <Rough.Arc
+        x={width}
+        y={Animated.add(400, 0)}
+        closed
+        roughClosure
+        width={Animated.add(200, 0)}
+        height={Animated.add(180, 0)}
+        start={Animated.add(Math.PI / 2, 0)}
+        stop={Animated.add(Math.PI, 0)}
+        fillStyle="zigzag"
+        strokeWidth={2}
+        stroke="blue"
+        fill="rgba(255,0,255,0.4)"
+      />
     </Svg>
   );
 };
