@@ -5,6 +5,8 @@
 # react-native-rough
 Animated [**Rough.js**](https://roughjs.com/) bindings for that hand-drawn feel.
 
+<img alt="code style: prettier" src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square">
+
 ## 🚀 getting started
 
 [react-native-rough](https://github.com/cawfree/react-native-rough) is available via the [**npm registry**](https://www.npmjs.com/):
