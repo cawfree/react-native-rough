@@ -3,11 +3,11 @@
 </p>
 
 # react-native-rough
-⚛️✍️Animated [**Rough.js**](https://roughjs.com/) bindings for that hand-drawn feel. If you're new to Rough.js, check out [**Excalidraw**](https://excalidraw.com/) for an interactive example.
+Animated [**Rough.js**](https://roughjs.com/) bindings for that hand-drawn feel.
 
 ## getting started
 
-[react-native-rough](https://github.com/cawfree/react-native-rough) is available via the [npm registry](https://www.npmjs.com/):
+[react-native-rough](https://github.com/cawfree/react-native-rough) is available via the [**npm registry**](https://www.npmjs.com/):
 
 ```
 yarn add react-native-rough # or npm i -s react-native-rough
@@ -17,7 +17,7 @@ This project depends upon [react-native-svg](https://github.com/react-native-com
 
 The component property spec fully conforms to the [**Rough.js API Specification**](https://github.com/pshihn/rough/wiki), and is powered by the [**Animated Driver**](https://reactnative.dev/docs/animated).
 
-You can see this library in action in the [**Example App**](./example/App.js). 
+You can see this library in action in the [**Example App**](./example/App.js).
 
 ## license
 [**MIT**](./LICENSE.md)
