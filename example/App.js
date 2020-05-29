@@ -41,17 +41,25 @@ export default () => {
         strokeWidth={5}
         fill="blue"
       />
-      <Rough.Rectangle
-        seed={40}
-        x={x}
+      <Rough.Ellipse
         bowing={2}
         roughness={2.8}
+        x={x}
         y={Animated.add(y, 300)}
         width={width}
         height={width}
         stroke="green"
         strokeWidth={5}
         fillStyle="zigzag"
+        fill="blue"
+      />
+      <Rough.Line
+        x1={y}
+        y1={y}
+        x2={width}
+        y2={width}
+        stroke="red"
+        strokeWidth={5}
         fill="blue"
       />
     </Svg>

@@ -1,11 +1,11 @@
 import React, {useCallback} from "react";
 import PropTypes from "prop-types";
 import {throttle} from "lodash";
-import {rectangle} from "roughjs/bin/renderer.js";
+import {ellipse} from "roughjs/bin/renderer.js";
 
 import {useAnimatedPath, useRough, useAnimatedCallback} from "../hooks";
 
-const Rectangle = ({x, y, width, height, throttle: ms, ...o}) => {
+const Ellipse = ({x, y, width, height, throttle: ms, ...o}) => {
   const generator = useRough(o);
 
   const [PathA, updateA] = useAnimatedPath();
@@ -14,7 +14,7 @@ const Rectangle = ({x, y, width, height, throttle: ms, ...o}) => {
   const onPathChanged = useCallback(
     throttle(
       () => {
-        const [a, b] = generator.toPaths(generator.rectangle(x.__getValue(), y.__getValue(), width.__getValue(), height.__getValue(), o)); 
+        const [a, b] = generator.toPaths(generator.ellipse(x.__getValue(), y.__getValue(), width.__getValue(), height.__getValue(), o)); 
         updateA(a);
         updateB(b);
       },
@@ -37,12 +37,12 @@ const Rectangle = ({x, y, width, height, throttle: ms, ...o}) => {
 };
 
 // TODO: implement force animated node
-Rectangle.propTypes = {
+Ellipse.propTypes = {
   throttle: PropTypes.number,
 };
 
-Rectangle.defaultProps = {
+Ellipse.defaultProps = {
   throttle: 35,
 };
 
-export default Rectangle;
+export default Ellipse;
