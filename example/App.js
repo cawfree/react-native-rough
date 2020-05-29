@@ -1,49 +1,38 @@
-import React, {useEffect, useState, useRef} from "react";
-import Svg from "react-native-svg";
-import {Animated} from "react-native";
-import Rough from "./rough";
+import React, {useEffect, useState, useRef} from 'react';
+import Svg from 'react-native-svg';
+import {Animated} from 'react-native';
+import Rough from 'react-native-rough';
 
 export default () => {
-  const {current:x} = useRef(new Animated.Value(10));
-  const {current:y} = useRef(new Animated.Value(100));
-  const {current:width} = useRef(new Animated.Value(1));
-  const {current:height} = useRef(new Animated.Value(200));
+  const {current: x} = useRef(new Animated.Value(10));
+  const {current: y} = useRef(new Animated.Value(100));
+  const {current: width} = useRef(new Animated.Value(1));
+  const {current: height} = useRef(new Animated.Value(200));
 
   const [points] = useState(
-    [[100, 200], [300, 300], [0, 700]]
-      .map(([x, y]) => new Animated.ValueXY({x, y})),
+    [
+      [100, 200],
+      [300, 300],
+      [0, 700],
+    ].map(([x, y]) => new Animated.ValueXY({x, y})),
   );
 
-  useEffect(
-    () => {
-      Animated.timing(
-        width,
-        {
-          toValue: 300,
-          duration: 1000,
-          useNativeDriver: true,
-        },
-      )
-        .start();
+  useEffect(() => {
+    Animated.timing(width, {
+      toValue: 300,
+      duration: 1000,
+      useNativeDriver: true,
+    }).start();
 
-      Animated.timing(
-        points[0],
-        {
-          toValue: {x: 105, y: 205},
-          duration: 1000,
-          useNativeDriver: true,
-        },
-      )
-        .start();
-    },
-    [],
-  ); 
+    Animated.timing(points[0], {
+      toValue: {x: 105, y: 205},
+      duration: 1000,
+      useNativeDriver: true,
+    }).start();
+  }, []);
 
   return (
-    <Svg
-      width="100%"
-      height="100%"
-    >
+    <Svg width="100%" height="100%">
       <Rough.Rectangle
         x={x}
         hachureAngle={60}
@@ -99,15 +88,17 @@ export default () => {
         stroke="blue"
         fill="rgba(255,0,255,0.4)"
       />
-      <Rough.LinearPath
-        points={points}
-        strokeWidth={100}
-        stroke="green"
-      />
+      <Rough.LinearPath points={points} strokeWidth={100} stroke="green" />
       <Rough.Polygon
         points={points}
         strokeWidth={5}
         fill="red"
+        stroke="yellow"
+      />
+      <Rough.Curve
+        points={points}
+        strokeWidth={5}
+        fill="purple"
         stroke="yellow"
       />
     </Svg>

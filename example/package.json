@@ -10,13 +10,10 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "fast-deep-equal": "^3.1.1",
-    "immer": "^6.0.9",
     "react": "16.11.0",
     "react-native": "0.62.2",
-    "react-native-svg": "^12.1.0",
-    "roughjs": "^4.3.1",
-    "use-immer": "^0.4.0"
+    "react-native-rough": "../",
+    "react-native-svg": "^12.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.10.1",

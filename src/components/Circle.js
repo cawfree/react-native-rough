@@ -1,14 +1,10 @@
-import React, {useCallback} from "react";
+import React, { useCallback } from "react";
 import PropTypes from "prop-types";
 
 import Ellipse from "./Ellipse";
 
-const Circle = ({diameter, ...extraProps}) => (
-  <Ellipse
-    width={diameter}
-    height={diameter}
-    {...extraProps}
-  />
+const Circle = ({ diameter, ...extraProps }) => (
+  <Ellipse width={diameter} height={diameter} {...extraProps} />
 );
 
 // TODO: implement force animated node
