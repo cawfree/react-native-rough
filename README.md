@@ -5,7 +5,7 @@
 # react-native-rough
 Animated [**Rough.js**](https://roughjs.com/) bindings for that hand-drawn feel.
 
-## getting started
+## 🚀 getting started
 
 [react-native-rough](https://github.com/cawfree/react-native-rough) is available via the [**npm registry**](https://www.npmjs.com/):
 
@@ -19,5 +19,5 @@ The component property spec fully conforms to the [**Rough.js API Specification*
 
 You can see this library in action in the [**Example App**](./example/App.js).
 
-## license
+## ✌️ license
 [**MIT**](./LICENSE.md)
