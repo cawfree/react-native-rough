@@ -47,7 +47,7 @@ export default () => {
         x={x}
         y={Animated.add(y, 300)}
         width={width}
-        height={width}
+        height={height}
         stroke="green"
         strokeWidth={5}
         fillStyle="zigzag"
@@ -58,6 +58,14 @@ export default () => {
         y1={y}
         x2={width}
         y2={width}
+        stroke="red"
+        strokeWidth={5}
+        fill="blue"
+      />
+      <Rough.Circle
+        x={x}
+        y={x}
+        diameter={width}
         stroke="red"
         strokeWidth={5}
         fill="blue"

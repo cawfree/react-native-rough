@@ -1,7 +1,8 @@
-import {Rectangle, Ellipse, Line} from "./components";
+import {Rectangle, Ellipse, Line, Circle} from "./components";
 
 export default Object.freeze({
   Rectangle,
   Ellipse,
   Line,
+  Circle,
 });
