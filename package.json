@@ -1,7 +1,7 @@
 {
   "name": "react-native-rough",
-  "version": "0.1.0-alpha.0",
-  "description": "⚛️✍️Animated Rough.js bindings for that hand-drawn feel.",
+  "version": "0.1.0-alpha.1",
+  "description": "⚛️✍️ Rough.js bindings for that hand-drawn feel.",
   "main": "dist",
   "repository": "https://github.com/cawfree/react-native-rough",
   "author": "Alex Thomas (@cawfree) <hello@cawfree.com>",
