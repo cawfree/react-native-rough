@@ -1,68 +1,47 @@
 import React, { useCallback } from "react";
 import PropTypes from "prop-types";
-import { throttle } from "lodash";
+import {Path} from "react-native-svg";
+import {useRough} from "../hooks";
 
-import { useAnimatedPath, useRough, useAnimatedCallback } from "../hooks";
-
-const Arc = ({
-  x,
-  y,
-  width,
-  height,
-  start,
-  stop,
-  closed,
-  throttle: ms,
-  ...o
-}) => {
+const Arc = ({ x, y, width, height, start, stop, closed, ...o }) => {
   const generator = useRough(o);
-
-  const [PathA, updateA] = useAnimatedPath();
-  const [PathB, updateB] = useAnimatedPath();
-
-  const onPathChanged = useCallback(
-    throttle(() => {
-      const [a, b, ...e] = generator.toPaths(
-        generator.arc(
-          x.__getValue(),
-          y.__getValue(),
-          width.__getValue(),
-          height.__getValue(),
-          start.__getValue(),
-          stop.__getValue(),
-          !!closed,
-          o
-        )
-      );
-      updateA(a);
-      updateB(b);
-    }, ms),
-    [updateA, updateB, x, y, width, height, start, stop, closed, ms]
+  const [a, b] = generator.toPaths(
+    generator.arc(
+      x,
+      y,
+      width,
+      height,
+      start,
+      stop,
+      closed,
+      o
+    ),
   );
-
-  useAnimatedCallback(x, onPathChanged);
-  useAnimatedCallback(y, onPathChanged);
-  useAnimatedCallback(width, onPathChanged);
-  useAnimatedCallback(height, onPathChanged);
-  useAnimatedCallback(start, onPathChanged);
-  useAnimatedCallback(stop, onPathChanged);
-
+  const {d: stroke, ...strokeProps} = (a || {});
+  const {d: fill, ...fillProps} = (b || {});
   return (
     <>
-      <PathA />
-      <PathB />
+      {(!!stroke) && (
+        <Path d={stroke} {...strokeProps}/>
+      )}
+      {(!!fill) && (
+        <Path d={fill} {...fillProps}/>
+      )}
     </>
   );
 };
 
-// TODO: implement force animated node
 Arc.propTypes = {
-  throttle: PropTypes.number,
+  x: PropTypes.number.isRequired,
+  y: PropTypes.number.isRequired,
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+  start: PropTypes.number.isRequired,
+  stop: PropTypes.number.isRequired,
   closed: PropTypes.bool,
 };
 
 Arc.defaultProps = {
-  throttle: 35,
   closed: false,
 };
 

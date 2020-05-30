@@ -1,45 +1,40 @@
 import React, { useCallback } from "react";
 import PropTypes from "prop-types";
-import { throttle } from "lodash";
+import {Path} from "react-native-svg";
+import {useRough} from "../hooks";
 
-import { useAnimatedPath, useRough, useAnimatedCallback } from "../hooks";
-
-const Line = ({ x1, y1, x2, y2, throttle: ms, ...o }) => {
+const Line = ({ x1, y1, x2, y2, ...o }) => {
   const generator = useRough(o);
-
-  const [Path, update] = useAnimatedPath();
-
-  const onPathChanged = useCallback(
-    throttle(() => {
-      const [path] = generator.toPaths(
-        generator.line(
-          x1.__getValue(),
-          y1.__getValue(),
-          x2.__getValue(),
-          y2.__getValue(),
-          o
-        )
-      );
-      update(path);
-    }, ms),
-    [update, x1, y1, x2, y2, ms]
+  const [a, b] = generator.toPaths(
+    generator.line(
+      x1,
+      y1,
+      x2,
+      y2,
+      o
+    )
   );
-
-  useAnimatedCallback(x1, onPathChanged);
-  useAnimatedCallback(y1, onPathChanged);
-  useAnimatedCallback(x2, onPathChanged);
-  useAnimatedCallback(y2, onPathChanged);
-
-  return <Path />;
+  const {d: stroke, ...strokeProps} = (a || {});
+  const {d: fill, ...fillProps} = (b || {});
+  return (
+    <>
+      {(!!stroke) && (
+        <Path d={stroke} {...strokeProps}/>
+      )}
+      {(!!fill) && (
+        <Path d={fill} {...fillProps}/>
+      )}
+    </>
+  );
 };
 
-// TODO: implement force animated node
 Line.propTypes = {
-  throttle: PropTypes.number,
+  x1: PropTypes.number.isRequired,
+  y1: PropTypes.number.isRequired,
+  x2: PropTypes.number.isRequired,
+  y2: PropTypes.number.isRequired,
 };
 
-Line.defaultProps = {
-  throttle: 35,
-};
+Line.defaultProps = {};
 
 export default Line;

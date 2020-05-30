@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useRef} from 'react';
-import {TouchableOpacity, View, StyleSheet, Animated, Dimensions, SafeAreaView, ScrollView, Text} from 'react-native';
+import {TouchableOpacity, View, StyleSheet, Dimensions, SafeAreaView, ScrollView, Text} from 'react-native';
 import Svg from 'react-native-svg';
 import Rough from 'react-native-rough';
 
@@ -45,103 +45,100 @@ const styles = StyleSheet.create({
   },
 });
 
-const RectangleExample = () => {
+const RectangleExample = () => (
+  <Rough.Rectangle
+    x={20}
+    y={20}
+    width={width - 40}
+    height={width - 40}
+    hachureAngle={60}
+    hachureGap={15}
+    fillWeight={3}
+    stroke="red"
+    strokeWidth={5}
+    fill="blue"
+  />
+);
 
-  const padding = 50;
+const ArcExample = () => (
+ <Rough.Arc
+   seed={10}
+   x={width * 0.5}
+   y={width * 0.5}
+   closed
+   width={width - 2 * 50}
+   height={width - 2 * 50}
+   start={0}
+   stop={2 * Math.PI}
+   fillStyle="zigzag"
+   strokeWidth={4}
+   stroke="orange"
+   fill="rgba(255,0,255,0.4)"
+ />
+);
 
-  const {current: x} = useRef(new Animated.Value(padding));
-  const {current: y} = useRef(new Animated.Value(padding));
-  const {current: size} = useRef(new Animated.Value(0));
+const EllipseExample = () => (
+  <Rough.Ellipse
+    x={width * 0.5}
+    y={width * 0.5}
+    width={width - 40}
+    height={width * 0.5}
+    hachureAngle={60}
+    hachureGap={15}
+    fillWeight={3}
+    stroke="red"
+    strokeWidth={5}
+    fill="blue"
+  />
+);
 
-  useEffect(() => Animated.timing(size, {
-      toValue: width - 2 * padding,
-      duration: 500,
-      useNativeDriver: true,
-    }).start() && undefined, []);
+const CircleExample = () => (
+  <Rough.Circle
+    x={width * 0.5}
+    y={width * 0.5}
+    diameter={width - 40}
+    hachureAngle={60}
+    hachureGap={15}
+    fillWeight={3}
+    stroke="red"
+    strokeWidth={5}
+    fill="blue"
+  />
+);
 
+const LineExample = () => (
+  <Rough.Line
+    x1={20}
+    y1={20}
+    x2={width - 40}
+    y2={width - 40}
+    stroke="purple"
+    strokeWidth={20}
+  />
+);
+
+const LinearPathExample = () => (
+  <Rough.LinearPath
+    points={[
+      [0, 20],
+      [50, 20],
+      [width, width],
+    ]}
+    strokeWidth={5}
+    stroke="pink"
+  />
+);
+
+const CurveExample = () => {
+  let points = [];
+  for (let i = 0; i < 20; i++) {
+    let x = (width / 20) * i + 10;
+    let xdeg = (Math.PI / 100) * x;
+    let y = Math.round(Math.sin(xdeg) * width * 0.5 * 0.8) + width * 0.5;
+    points.push([x, y]);
+  }
   return (
-    <Rough.Rectangle
-        x={x}
-        y={y}
-        width={size}
-        height={size}
-        hachureAngle={60}
-        hachureGap={15}
-        fillWeight={3}
-        stroke="red"
-        strokeWidth={5}
-        fill="blue"
-      />
-  );
-};
-
-const ArcExample = () => {
-  const padding = 50;
-
-  const {current: x} = useRef(new Animated.Value(width * 0.5));
-  const {current: y} = useRef(new Animated.Value(width * 0.5));
-
-  const {current: size} = useRef(new Animated.Value(width - (2 * padding)));
-  
-  const {current: start} = useRef(new Animated.Value(0));
-  const {current: stop} = useRef(new Animated.Value(0.01));
-
-  useEffect(() => Animated.timing(stop, {
-    toValue: Math.PI * 2,
-    duration: 500,
-    useNativeDriver: true,
-  }).start() && undefined, []);
-
-  return (
-   <Rough.Arc
-     seed={10}
-     x={x}
-     y={y}
-     closed
-     width={size}
-     height={size}
-     start={start}
-     stop={stop}
-     fillStyle="zigzag"
-     strokeWidth={4}
-     stroke="orange"
-     fill="rgba(255,0,255,0.4)"
-   />
-  );
-};
-
-const LinearPathExample = () => {
-  const [points] = useState(
-    [...Array(10)]
-      .map(
-        (_, i, orig) => new Animated.ValueXY({x: (i == 0) ? 0 : (i + 1) * (width / orig.length), y: width * 0.5}),
-      ),
-  );
-
-  useEffect(
-    () => {
-      Animated.parallel(
-        points
-          .map(
-            point => Animated
-              .spring(
-                point,
-                {
-                  toValue: {
-                    x: point.x.__getValue(),
-                    y: width * Math.random(),
-                  },
-                  useNativeDriver: true,
-                },
-              ),
-          ),
-      ).start();
-    },
-    [],
-  );
-
-  return (
-    <Rough.LinearPath
+    <Rough.Curve
       points={points}
       strokeWidth={5}
       stroke="pink"
@@ -149,84 +146,32 @@ const LinearPathExample = () => {
   );
 };
 
-const LineExample = () => {
-
-  const padding = 50;
-
-  const {current: x} = useRef(new Animated.Value(padding));
-  const {current: y} = useRef(new Animated.Value(padding));
-  const {current: size} = useRef(new Animated.Value(30));
-
-  useEffect(() => Animated.timing(size, {
-      toValue: width - padding,
-      duration: 400,
-      useNativeDriver: true,
-    }).start() && undefined, []);
-
-  return (
-    <Rough.Line
-      x1={x}
-      y1={y}
-      x2={size}
-      y2={size}
-      stroke="purple"
-      strokeWidth={30}
-    />
-  );
-};
-
-const CurveExample = () => {
-  // draw sine curve
-  let points = [];
-  for (let i = 0; i < 20; i++) {
-    // 4pi - 400px
-    let x = (width / 20) * i + 10;
-    let xdeg = (Math.PI / 100) * x;
-    let y = Math.round(Math.sin(xdeg) * width * 0.4);// + width * 0.5;
-    points.push(
-      new Animated.ValueXY({x, y}),
-    );
-  }
-
-  useEffect(
-    () => {
-      Animated.parallel(
-        points
-          .map(
-            point => Animated
-              .spring(
-                point,
-                {
-                  toValue: {
-                    x: point.x.__getValue(),
-                    y: point.y.__getValue() + (width * 0.5),
-                  },
-                  useNativeDriver: true,
-                },
-              ),
-          ),
-      ).start();
-    },
-    [],
-  );
-
-  return (
-    <Rough.Curve
-      points={points}
-      strokeWidth={5}
-      stroke="navy"
-    />
-  );
-};
+const PolygonExample = () => (
+  <Rough.Polygon
+    points={[
+      [0, 20],
+      [50, 20],
+      [width, width],
+    ]}
+    strokeWidth={5}
+    stroke="pink"
+    fillStyle="solid"
+    fill="red"
+    fillStyle="dots"
+  />
+);
 
 export default () => {
   const [index, setIndex] = useState(0);
   const [rows] = useState([
-    ["Rectangle", "Sketches a rough rectangle.", RectangleExample],
-    ["Line", "Draws a cool, hand-drawn looking line between two points.", LineExample],
-    ["Arc", "Renders an arc. You know, like a pie chart?", ArcExample],
-    ["LinearPath", "Draw a line between array of points.", LinearPathExample],
+    ["Arc", "Renders an hand-drawn style arc. You know, like a pie chart?", ArcExample],
+    ["Circle", "Draws a rough circle.", CircleExample],
     ["Curve", "Like a LinearPath, but the points are smoothly interpolated between.", CurveExample],
+    ["Ellipse", "Renders an ellipse. This is like a Circle, but you can have different width and height.", EllipseExample],
+    ["Line", "Draws a cool, hand-drawn looking line between two points.", LineExample],
+    ["LinearPath", "Draw a line between array of points.", LinearPathExample],
+    ["Polygon", "Like a LinearPath, but the points are smoothly interpolated between using Bezier curves.", PolygonExample],
+    ["Rectangle", "Sketches a rough rectangle.", RectangleExample],
   ]);
   const Example = rows[index][2];
   return (
@@ -280,7 +225,6 @@ export default () => {
                     children={`<Rough.${rowTitle} />`}
                   />
                   {(i === index) && (
-
                     <View
                       style={{
                         paddingHorizontal: 10,
