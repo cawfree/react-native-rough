@@ -1,53 +1,40 @@
 import React, { useCallback } from "react";
 import PropTypes from "prop-types";
-import { throttle } from "lodash";
+import {Path} from "react-native-svg";
+import {useRough} from "../hooks";
 
-import { useAnimatedPath, useRough, useAnimatedCallback } from "../hooks";
-
-const Rectangle = ({ x, y, width, height, throttle: ms, ...o }) => {
+const Rectangle = ({ x, y, width, height, ...o }) => {
   const generator = useRough(o);
-
-  const [PathA, updateA] = useAnimatedPath();
-  const [PathB, updateB] = useAnimatedPath();
-
-  const onPathChanged = useCallback(
-    throttle(() => {
-      const [a, b] = generator.toPaths(
-        generator.rectangle(
-          x.__getValue(),
-          y.__getValue(),
-          width.__getValue(),
-          height.__getValue(),
-          o
-        )
-      );
-
-      updateA(a);
-      updateB(b);
-    }, ms),
-    [updateA, updateB, x, y, width, height, ms]
+  const [a, b] = generator.toPaths(
+    generator.rectangle(
+      x,
+      y,
+      width,
+      height,
+      o
+    )
   );
-
-  useAnimatedCallback(x, onPathChanged);
-  useAnimatedCallback(y, onPathChanged);
-  useAnimatedCallback(width, onPathChanged);
-  useAnimatedCallback(height, onPathChanged);
-
+  const {d: stroke, ...strokeProps} = (a || {});
+  const {d: fill, ...fillProps} = (b || {});
   return (
     <>
-      <PathA />
-      <PathB />
+      {(!!stroke) && (
+        <Path d={stroke} {...strokeProps}/>
+      )}
+      {(!!fill) && (
+        <Path d={fill} {...fillProps}/>
+      )}
     </>
   );
 };
 
-// TODO: implement force animated node
 Rectangle.propTypes = {
-  throttle: PropTypes.number,
+  x: PropTypes.number.isRequired,
+  y: PropTypes.number.isRequired,
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
 };
 
-Rectangle.defaultProps = {
-  throttle: 35,
-};
+Rectangle.defaultProps = {};
 
 export default Rectangle;

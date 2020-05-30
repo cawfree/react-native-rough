@@ -7,13 +7,10 @@ const Circle = ({ diameter, ...extraProps }) => (
   <Ellipse width={diameter} height={diameter} {...extraProps} />
 );
 
-// TODO: implement force animated node
 Circle.propTypes = {
-  throttle: PropTypes.number,
+  diameter: PropTypes.number.isRequired,
 };
 
-Circle.defaultProps = {
-  throttle: 35,
-};
+Circle.defaultProps = {};
 
 export default Circle;
