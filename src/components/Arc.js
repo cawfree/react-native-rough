@@ -1,32 +1,19 @@
 import React, { useCallback } from "react";
 import PropTypes from "prop-types";
-import {Path} from "react-native-svg";
-import {useRough} from "../hooks";
+import { Path } from "react-native-svg";
+import { useRough } from "../hooks";
 
 const Arc = ({ x, y, width, height, start, stop, closed, ...o }) => {
   const generator = useRough(o);
   const [a, b] = generator.toPaths(
-    generator.arc(
-      x,
-      y,
-      width,
-      height,
-      start,
-      stop,
-      closed,
-      o
-    ),
+    generator.arc(x, y, width, height, start, stop, closed, o)
   );
-  const {d: stroke, ...strokeProps} = (a || {});
-  const {d: fill, ...fillProps} = (b || {});
+  const { d: stroke, ...strokeProps } = a || {};
+  const { d: fill, ...fillProps } = b || {};
   return (
     <>
-      {(!!stroke) && (
-        <Path d={stroke} {...strokeProps}/>
-      )}
-      {(!!fill) && (
-        <Path d={fill} {...fillProps}/>
-      )}
+      {!!stroke && <Path d={stroke} {...strokeProps} />}
+      {!!fill && <Path d={fill} {...fillProps} />}
     </>
   );
 };
