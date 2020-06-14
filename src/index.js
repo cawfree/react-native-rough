@@ -7,6 +7,7 @@ import {
   LinearPath,
   Polygon,
   Curve,
+  Path,
 } from "./components";
 
 export default Object.freeze({
@@ -18,4 +19,5 @@ export default Object.freeze({
   LinearPath,
   Polygon,
   Curve,
+  Path,
 });

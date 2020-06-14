@@ -6,3 +6,4 @@ export { default as Arc } from "./Arc";
 export { default as LinearPath } from "./LinearPath";
 export { default as Polygon } from "./Polygon";
 export { default as Curve } from "./Curve";
+export { default as Path } from "./Path";

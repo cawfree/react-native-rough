@@ -6,4 +6,5 @@ const defaultOptions = Object.freeze({
 });
 
 // TODO: How to cache to make function as a proper hook?
-export const useRough = (options = defaultOptions) => new RoughGenerator({ ...defaultOptions, ...options });
+export const useRough = (options = defaultOptions) =>
+  new RoughGenerator({ ...defaultOptions, ...options });
