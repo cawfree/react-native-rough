@@ -21,7 +21,8 @@
     "animated"
   ],
   "dependencies": {
-    "roughjs": "^4.3.1"
+    "roughjs": "^4.3.1",
+    "react-native-svg": "^12.1.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.1",
@@ -29,9 +30,11 @@
     "@babel/node": "^7.10.1",
     "@babel/preset-env": "^7.10.1",
     "@babel/preset-react": "^7.10.1",
+    "@types/react-native": "^0.62.13",
     "husky": "^4.2.5",
     "jest": "^26.0.1",
     "leasot": "^11.0.0",
-    "prettier": "^2.0.5"
+    "prettier": "^2.0.5",
+    "typescript": "^3.9.5"
   }
 }
