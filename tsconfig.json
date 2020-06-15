@@ -23,5 +23,5 @@
     "target": "esnext",
     "baseUrl": "."
   },
-  "include": ["./src-ts"]
+  "include": ["./src"]
 }

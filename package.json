@@ -8,7 +8,7 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "build": "babel src --out-dir dist",
+    "build": "yarn tsc src/**.ts --jsx \"react-native\" -outDir dist --esModuleInterop true --skipLibCheck",
     "prettify": "yarn prettier --write \"**/*.js\"",
     "test": "jest"
   },
